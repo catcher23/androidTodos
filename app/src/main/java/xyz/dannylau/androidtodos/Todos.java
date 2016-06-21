@@ -1,38 +1,49 @@
 package xyz.dannylau.androidtodos;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class Todos extends AppCompatActivity {
-    private EditText etWords;
-    private TextView tvLabel;
+    ArrayList<String> items;
+    ArrayAdapter<String> itemsAdapter;
+    ListView lvItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todos);
+        lvItems = (ListView) findViewById(R.id.lvItems);
+        items = new ArrayList<>();
+        itemsAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, items);
+        lvItems.setAdapter(itemsAdapter);
+        items.add("First Item");
+        items.add("Second Item");
+        setupListViewListener();
+    }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        setSupportActionBar(toolbar);
-
-       FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+    private void setupListViewListener() {
+        lvItems.setOnItemLongClickListener(
+                new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> adapter,
+                                                   View item, int pos, long id) {
+                        items.remove(pos);
+                        itemsAdapter.notifyDataSetChanged();
+                        return true;
+                    }
+                }
+        );
     }
 
     @Override
@@ -57,9 +68,16 @@ public class Todos extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void addTodo(View view) {
-        String fieldValue = etWords.getText().toString();
-        tvLabel.setText(fieldValue);
-        Toast.makeText(this, fieldValue, Toast.LENGTH_SHORT).show();
+    public void onAddItem(View view) {
+        EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
+        String itemText = etNewItem.getText().toString();
+
+        if (itemText.length() > 0) {
+            itemsAdapter.add(itemText);
+        } else {
+            Toast.makeText(this, "Please enter a todo", Toast.LENGTH_SHORT).show();
+        }
+
+        etNewItem.setText("");
     }
 }

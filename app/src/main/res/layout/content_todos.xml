@@ -18,7 +18,8 @@
         android:layout_height="wrap_content"
         android:text="Add Item"
         android:id="@+id/btnAddItem"
-        android:layout_marginBottom="48dp"
+        android:onClick="onAddItem"
+        android:layout_marginBottom="90dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
 
