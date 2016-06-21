@@ -8,15 +8,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Todos extends AppCompatActivity {
+    private EditText etWords;
+    private TextView tvLabel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todos);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
 
        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -52,6 +58,8 @@ public class Todos extends AppCompatActivity {
     }
 
     public void addTodo(View view) {
-        Toast.makeText(this, "Hello World", Toast.LENGTH_SHORT).show();
+        String fieldValue = etWords.getText().toString();
+        tvLabel.setText(fieldValue);
+        Toast.makeText(this, fieldValue, Toast.LENGTH_SHORT).show();
     }
 }

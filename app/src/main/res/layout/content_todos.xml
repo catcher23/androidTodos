@@ -16,29 +16,28 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add_todo"
-        android:onClick="addTodo"
+        android:text="Add Item"
+        android:id="@+id/btnAddItem"
+        android:layout_marginBottom="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
-        android:id="@+id/btnAddTodo"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/nothing_label"
-        android:id="@+id/tvLabel"
-        android:layout_marginTop="40dp"
-        android:layout_below="@+id/btnAddTodo"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/lvItems"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/btnAddItem"
+        android:layout_alignEnd="@+id/btnAddItem"
+        android:layout_above="@+id/btnAddItem" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/etWords"
-        android:layout_above="@+id/btnAddTodo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
-        android:text="@string/enter_any_text_label" />
+        android:id="@+id/etNewItem"
+        android:hint="Enter a new item"
+        android:layout_alignTop="@+id/btnAddItem"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/btnAddItem"
+        android:layout_alignBottom="@+id/btnAddItem" />
 </RelativeLayout>
