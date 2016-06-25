@@ -1,5 +1,6 @@
 package xyz.dannylau.androidtodos;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -62,12 +63,22 @@ public class Todos extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapter,
                                                    View item, int pos, long id) {
-                        items.remove(pos);
-                        itemsAdapter.notifyDataSetChanged();
-                        writeItems();
+                        Intent intent = new Intent(Todos.this, EditActivity.class);
+                        intent.putExtra("item", items.get(pos));
+                        intent.putExtra("pos", String.valueOf(pos));
+                        startActivityForResult(intent, 10);
                     }
                 }
         );
+    }
+
+    private void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == 10) {
+            String item = data.getStringExtra("item");
+            int pos = Integer.parseInt(data.getStringExtra("pos"));
+            items.set(pos, item);
+            writeItems();
+        }
     }
 
     @Override
