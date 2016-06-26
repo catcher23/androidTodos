@@ -56,27 +56,28 @@ public class Todos extends AppCompatActivity {
                 }
         );
     }
-
+    private final int REQUEST_CODE = 10;
     private void setupEditListener() {
         lvItems.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapter,
                                                    View item, int pos, long id) {
-                        Intent intent = new Intent(Todos.this, EditActivity.class);
+                        Intent intent = new Intent(Todos.this, EditTodos.class);
                         intent.putExtra("item", items.get(pos));
                         intent.putExtra("pos", String.valueOf(pos));
-                        startActivityForResult(intent, 10);
+                        startActivityForResult(intent, REQUEST_CODE);
                     }
                 }
         );
     }
 
-    private void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && requestCode == 10) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
             String item = data.getStringExtra("item");
             int pos = Integer.parseInt(data.getStringExtra("pos"));
             items.set(pos, item);
+            itemsAdapter.notifyDataSetChanged();
             writeItems();
         }
     }
@@ -115,6 +116,7 @@ public class Todos extends AppCompatActivity {
         }
 
         etNewItem.setText("");
+        writeItems();
     }
 
     private void readItems() {
